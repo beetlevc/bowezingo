@@ -1,15 +1,12 @@
 ﻿{
     "bvc": {
-        "my_feed": "Моя лента",
+        "bowezingo_feed": "Лента Bowezingo",
+        "recent_post": "Свежий пост",
+        "low_sp": "Мало SP",
+        "post_in_russian": "Пост на русском",
         "settings": "Настройки",
-        "blog": "Блог",
-        "show_reblogged": "Показывать репосты",
-        "filter_mode": "Режим фильтра",
-        "whitelist": "Белый список",
-        "blacklist": "Черный список",
         "apply_settings": "Применить",
         "account_list_description": "Список аккаунтов через запятую",
-        "blog_description": "Укажите свой аккаунт",
         "service_unavailable": "Сервис временно недоступен. Пожалуйста, попробуйте повторить попытку позже."
     },
     "g": {

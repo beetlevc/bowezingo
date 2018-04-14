@@ -1,4 +1,4 @@
-# my-steemit-feed
+# bowezingo
 
 > A Vue.js project
 

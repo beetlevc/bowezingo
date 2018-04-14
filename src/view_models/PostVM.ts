@@ -6,6 +6,8 @@ import { formatDecimal, parsePayoutAmount, repLog10 } from '../utils/ParsersAndF
 import proxifyImageUrl from '../utils/ProxifyUrl'
 import * as steem from 'steem'
 
+const MsInHour: number = 60 * 60 * 1000;
+
 // function calcReputationLog10(reputation: number): number {
 //     let multi = (reputation < 0)?-9:9;
 //     let rep = Math.log10(Math.abs(reputation)); //The reputation score is based off of a log10 system
@@ -21,6 +23,9 @@ export default class PostVM {
     readonly blogSizeImageUrl: string;
     readonly listSizeImageUrl: string;
     readonly description: string;
+    readonly isRecentPost: boolean;
+    readonly isRus: boolean;
+    readonly isSpLow: boolean;
 
     get authorUrl(): string {
         return `${SteemitBaseUrl}/@${this.author}`;
@@ -123,6 +128,9 @@ export default class PostVM {
             this.listSizeImageUrl = this.imageUrl;
         }
         this.description = content.desc;
+        this.isRecentPost = (Date.now() - created.valueOf()) / MsInHour <= 24;
+        this.isRus = true;
+        this.isSpLow = true;
     }
 
     static create(post: steem.Post): PostVM {

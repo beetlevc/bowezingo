@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <base href="/my-steemit-feed/"> -->
+    <!-- <base href="/bowezingo/"> -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="My Steemit Feed enables feed customization.">
+    <meta name="description" content="Bowezingo contest feed.">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="My Steemit Feed">
-    <meta property="og:title" content="My Steemit Feed">
-    <meta property="og:description" content="My Steemit Feed enables feed customization.">
+    <meta property="og:site_name" content="Bowezingo">
+    <meta property="og:title" content="Bowezingo">
+    <meta property="og:description" content="Bowezingo contest feed.">
     <meta property="og:image" content="https://steemit.com/images/steemit.png">
     <link rel="icon" type="image/x-icon" href="https://steemit.com/favicon.ico?v=2">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-196x196.png" sizes="196x196">
@@ -16,8 +16,8 @@
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-128.png" sizes="128x128">
-    <meta name="application-name" content="My Steemit Feed">
-    <title>My Steemit Feed</title>
+    <meta name="application-name" content="Bowezingo">
+    <title>Bowezingo</title>
     <style type="text/css">
         [v-cloak] {display: none}
     </style>
@@ -30,33 +30,6 @@
                     <button class="close-button" type="button" v-on:click="hideSettings"><span aria-hidden="true" class="">×</span></button>
                     <div style="margin: 1rem">
                         <center><strong style="text-transform: uppercase">{{ tt('bvc.settings') }}</strong></center>
-                        <label class="SettingTitle" v-bind:title="tt('bvc.blog_description')">
-                            {{ tt('bvc.blog') }}
-                            <input type="text" v-bind:placeholder="tt('bvc.blog_description')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="1" name="blog" v-model="settingsEditor.blog" required>
-                        </label>
-                        <label class="SettingTitle" v-bind:title="tt('bvc.show_reblogged')">
-                            <input type="checkbox" tabindex="2" v-model="settingsEditor.showReblogged" style="vertical-align: middle">
-                            {{ tt('bvc.show_reblogged') }}
-                        </label>
-                        <label class="SettingTitle" v-bind:title="tt('bvc.filter_mode')">
-                            {{ tt('bvc.filter_mode') }}
-                            <label v-bind:title="tt('bvc.whitelist')">
-                                <input type="radio" value="Whitelist" v-model="settingsEditor.filterMode" tabindex="3" style="vertical-align: middle">
-                                {{ tt('bvc.whitelist') }}
-                            </label>
-                            <label v-bind:title="tt('bvc.blacklist')">
-                                <input type="radio" value="Blacklist" v-model="settingsEditor.filterMode" tabindex="3" style="vertical-align: middle">
-                                {{ tt('bvc.blacklist') }}
-                            </label>
-                        </label>
-                        <label v-if="settingsEditor.filterMode === 'Whitelist'" class="SettingTitle" v-bind:title="tt('bvc.account_list_description')">
-                            {{ tt('bvc.whitelist') }}
-                            <textarea type="text" v-bind:placeholder="tt('bvc.account_list_description')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="4" name="whitelist" v-model="settingsEditor.whitelist" style="resize: vertical; height: 5rem"></textarea>
-                        </label>
-                        <label v-if="settingsEditor.filterMode === 'Blacklist'" class="SettingTitle" v-bind:title="tt('bvc.account_list_description')">
-                            {{ tt('bvc.blacklist') }}
-                            <textarea type="text" v-bind:placeholder="tt('bvc.account_list_description')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="5" name="blacklist" v-model="settingsEditor.blacklist" style="resize: vertical; height: 5rem"></textarea>
-                        </label>
                         <button class="button" tabindex="6" v-on:click="saveSettings">{{ tt('bvc.apply_settings') }}</button>
                         <hr />
                     </div>
@@ -92,7 +65,7 @@
                     <article class="articles">
                         <div class="articles__header row">
                             <div class="small-6 medium-6 large-6 column">
-                                <h1 class="articles__h1 articles__h1--no-wrap">{{ tt('bvc.my_feed') }}&nbsp;({{ visiblePostCount }}/{{ postCount }})</h1>
+                                <h1 class="articles__h1 articles__h1--no-wrap">{{ tt('bvc.bowezingo_feed') }}&nbsp;({{ visiblePostCount }}/{{ postCount }})</h1>
                             </div>
                             <div class="medium-1 show-for-mq-medium column" id="articleLayoutSelector" v-on:click="toggleBlogmode">
                                 <div class="articles__layout-selector">
@@ -104,7 +77,7 @@
                         <div id="posts_list" class="PostsList">
                             <ul class="PostsList__summaries hfeed" itemscope="" itemtype="http://schema.org/blogPosts" id="postList">
                                 <li v-for="post in posts" v-if="post.isVisible">
-                                    <div class="articles__summary">
+                                    <div class="articles__summary" style="border-color: lightgreen; border-style: solid; border-width: 1px; padding: 0.5rem">
                                         <div class="articles__resteem" v-if="post.isReblogged">
                                             <p class="articles__resteem-text">
                                               <span class="articles__resteem-icon">
@@ -189,6 +162,14 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <!-- <div style="background-color: lightpink; padding-left: 0.5rem; padding-right: 0.5rem; ">{{ tt('bvc.recent_post') }}</div>
+                                        <div style="background-color: lightgreen; padding-left: 0.5rem; padding-right: 0.5rem; ">{{ tt('bvc.low_sp') }}</div>
+                                        <div style="background-color: lightpink; padding-left: 0.5rem; padding-right: 0.5rem; ">{{ tt('bvc.post_in_russian') }}</div> -->
+                                        <div>
+                                            <span style="background-color: lightpink; padding: 0.25rem">{{ tt('bvc.recent_post') }}</span>
+                                            <span style="background-color: lightgreen; padding: 0.25rem">{{ tt('bvc.low_sp') }}</span>
+                                            <span style="background-color: lightpink; padding: 0.25rem">{{ tt('bvc.post_in_russian') }}</span>
                                         </div>
                                     </div>
                                 </li>

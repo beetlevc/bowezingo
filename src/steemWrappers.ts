@@ -39,7 +39,20 @@ export async function getDiscussionsByFeedAsync(blog: string, limit: number, sta
             start_author: startAuthor,
             start_permlink: startPermlink,
         };
-        let result = await steem.api.getDiscussionsByFeedAsync(query);
-        return result;
+        return await steem.api.getDiscussionsByFeedAsync(query);
+    });
+}
+
+export async function getDiscussionsByCreatedAsync(tag: string, limit: number, startAuthor: string, startPermlink: string): Promise<steem.Post[]> {
+    return await retry(async () => {
+        // if (Math.random() > 0.8)
+        //     throw new Error("Test error.");
+        const query: steem.DiscussionQuery = {
+            tag: tag,
+            limit: limit,
+            start_author: startAuthor ? startAuthor : undefined,
+            start_permlink: startPermlink ? startPermlink : startPermlink,
+        };
+        return await steem.api.getDiscussionsByCreatedAsync(query);
     });
 }

@@ -1,15 +1,12 @@
 {
     "bvc": {
-        "my_feed": "My feed",
+        "bowezingo_feed": "Bowezingo feed",
+        "recent_post": "Recent post",
+        "low_sp": "Low SP",
+        "post_in_russian": "Post in Russian",
         "settings": "Settings",
-        "blog": "Blog",
-        "show_reblogged": "Show reblogged",
-        "filter_mode": "Filter mode",
-        "whitelist": "Whitelist",
-        "blacklist": "Blacklist",
         "apply_settings": "Apply",
         "account_list_description": "Comma-separated account list",
-        "blog_description": "Your account",
         "service_unavailable": "Service is temporarily unavailable. Please try again later."
     },
     "g": {

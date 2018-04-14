@@ -1,8 +1,8 @@
 ﻿import PostVM from './PostVM'
 // import * as steem from 'steem'
-import { LocalStorageKey, PostsPerPage } from '../constants'
-import { getFeedFirstEntryAsync, getDiscussionsByFeedAsync } from '../steemWrappers'
-import { FilterMode, Settings } from '../models/Settings'
+import { LocalStorageKey, PostsPerPage, BowezingoTag } from '../constants'
+import { getDiscussionsByCreatedAsync } from '../steemWrappers'
+import { Settings } from '../models/Settings'
 import { SettingsEditorVM } from './SettingsEditorVM'
 //import * as debounce from 'lodash.debounce'
 const debounce = require("lodash.debounce")
@@ -54,8 +54,8 @@ export default class AppVM {
         this.isLoading++;
         this.loadMoreCount++;
         try {
-            let sAuthor = "";
-            let sPermlink = "";
+            let sAuthor: string = "";
+            let sPermlink: string = "";
             let sExclude = true;
             while (!this.isAllLoaded && minVisiblePosts > this.visiblePostCount) {
                 if (this.posts.length) {
@@ -63,17 +63,12 @@ export default class AppVM {
                     sPermlink = this.posts[this.posts.length - 1].permlink;
                     sExclude = true;
                 } else {
-                    const firstEntry = await getFeedFirstEntryAsync(this.settings.blog);
-                    if (firstEntry) {
-                        sAuthor = firstEntry.author;
-                        sPermlink = firstEntry.permlink;
-                        sExclude = false;
-                    } else {
-                        return;
-                    }
+                    sAuthor = "";
+                    sPermlink = "";
+                    sExclude = false;
                 }
     
-                let posts = await getDiscussionsByFeedAsync(this.settings.blog, PostsPerPage, sAuthor, sPermlink);
+                let posts = await getDiscussionsByCreatedAsync(BowezingoTag, PostsPerPage, sAuthor, sPermlink);
                 this.isAllLoaded = posts.length !== PostsPerPage;
                 if (sExclude)
                     posts = posts.slice(1);
@@ -92,37 +87,13 @@ export default class AppVM {
 
     filterPosts(posts: PostVM[]): void {
         for (const post of posts) {
-            if (!this.settings.showReblogged && post.isReblogged) {
-                post.isVisible = false;
-                continue;
-            }
-
-            switch(this.settings.filterMode) { 
-                case FilterMode.Blacklist: { 
-                    post.isVisible = !(this.settings.blacklist.indexOf(post.author) >= 0);
-                    break; 
-                } 
-                case FilterMode.Whitelist: { 
-                    post.isVisible = this.settings.whitelist.indexOf(post.author) >= 0;
-                    break; 
-                } 
-                default: { 
-                    console.log(`Filter mode ${this.settings.filterMode} is not supported.`);
-                    post.isVisible = true;
-                    break; 
-                } 
-             }
+            post.isVisible = true;
         }
     }
 
     showSettingsPanel(): void {
         this.isSettingsPanelVisible = true;
 
-        this.settingsEditor.blog = this.settings.blog;
-        this.settingsEditor.showReblogged = this.settings.showReblogged;
-        this.settingsEditor.filterMode = FilterMode[this.settings.filterMode];
-        this.settingsEditor.whitelist = this.settings.whitelist.join(", ");
-        this.settingsEditor.blacklist = this.settings.blacklist.join(", ");
     }
 
     hideSettingsPanel(): void {
@@ -130,25 +101,11 @@ export default class AppVM {
     }
 
     applySettings(): void {
-        const blog = this.settingsEditor.blog;
-        const filterMode = this.settingsEditor.filterMode !== undefined ? this.settingsEditor.filterMode : FilterMode.Blacklist;
-        const whitelist = this.settingsEditor.whitelist ? this.settingsEditor.whitelist.split(",").map(x => x.trim()) : []
-        const blacklist = this.settingsEditor.blacklist ? this.settingsEditor.blacklist.split(",").map(x => x.trim()) : []
 
-        const isBlogChanged = this.settings.blog !== blog;
-        this.settings.blog = blog;
-        this.settings.showReblogged = this.settingsEditor.showReblogged;
-        this.settings.filterMode = filterMode;
-        this.settings.whitelist = whitelist;
-        this.settings.blacklist = blacklist;
         this.saveSettings();
-        if (isBlogChanged) {
-            this.reloadAll(); // только запускаем, но не ждем завершения
-        } else {
-            this.filterPosts(this.posts);
-            if (this.visiblePostCount < PostsPerPage)
-                this.loadMore(); // только запускаем, но не ждем завершения
-        }
+        this.filterPosts(this.posts);
+        if (this.visiblePostCount < PostsPerPage)
+            this.loadMore(); // только запускаем, но не ждем завершения
     }
 
     loadSettings(): void {
@@ -156,11 +113,7 @@ export default class AppVM {
         try {
             const settingsString = localStorage.getItem(LocalStorageKey);
             const settings: Settings = settingsString ? JSON.parse(settingsString) : new Settings();
-            this.settings.blog = settings.blog;
-            this.settings.showReblogged = settings.showReblogged;
-            this.settings.filterMode = settings.filterMode;
-            this.settings.whitelist = settings.whitelist;
-            this.settings.blacklist = settings.blacklist;
+
         } catch {
             console.error("Could not load settings.");
         }
