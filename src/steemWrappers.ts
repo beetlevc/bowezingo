@@ -56,3 +56,15 @@ export async function getDiscussionsByCreatedAsync(tag: string, limit: number, s
         return await steem.api.getDiscussionsByCreatedAsync(query);
     });
 }
+
+export async function getDynamicGlobalPropertiesAsync(): Promise<steem.GlobalProperties> {
+    return await retry(async () => {
+        return await steem.api.getDynamicGlobalPropertiesAsync();
+    });
+}
+
+export async function getAccountsAsync(names: string[]): Promise<steem.Account[]> {
+    return await retry(async () => {
+        return await steem.api.getAccountsAsync(names);
+    });
+}

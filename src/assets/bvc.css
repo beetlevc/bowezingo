@@ -20,3 +20,132 @@
         height: 42px; 
     } 
 } */
+
+.BowezingoArticle {
+    border-style: solid; 
+    border-width: 2px; 
+    border-radius: 0.3rem;
+    padding: 0.5rem; 
+}
+.BowezingoArticleGreen {
+    border-color: lightgreen; 
+}
+.BowezingoArticleRed {
+    border-color: lightpink; 
+}
+
+.BowezingoTagList__horizontal {
+    margin-bottom: 0.5rem; 
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+}
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+    .BowezingoTagList__horizontal {
+      font-size: 86%; 
+    } 
+}
+/* Medium only */
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+    .BowezingoTagList__horizontal {
+      font-size: 92%; 
+    } 
+}
+.BowezingoTagList__horizontal span {
+    display: inline-block;
+    margin: 0.1rem 0.4rem 0.1rem 0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    transition: 0.2s all ease-in-out; 
+    border-width: 1px;
+    border-style: solid;
+}
+.theme-original .BowezingoTagList__horizontal span {
+    /* background: #fcfcfc; */
+    color: #333;
+    border-color: #eee; 
+}
+.theme-light .BowezingoTagList__horizontal span {
+    /* background: #fcfcfc; */
+    color: #333;
+    border-color: #eee; 
+}
+.theme-dark .BowezingoTagList__horizontal span {
+    background: #2C3A45;
+    /* color: #fcfcfc; */
+    border-color: #232F38; 
+}
+.theme-original .BowezingoTagGreen {
+    background: lightgreen;
+}
+.theme-original .BowezingoTagRed {
+    background: lightpink;
+}
+.theme-light .BowezingoTagGreen {
+    background: lightgreen;
+}
+.theme-light .BowezingoTagRed {
+    background: lightpink;
+}
+.theme-dark .BowezingoTagGreen {
+    color: lightgreen;
+}
+.theme-dark .BowezingoTagRed {
+    color: lightpink;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+
+    margin: initial;
+}  
+/* Hide default HTML checkbox */
+.switch input {display:none;} 
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+    height: initial;
+    margin: initial;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+} 
+input:checked + .slider {
+    background-color: #2196F3;
+} 
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+} 
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+} 
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+} 
+.slider.round:before {
+    border-radius: 50%;
+}

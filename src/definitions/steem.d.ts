@@ -88,6 +88,106 @@
         comment: any; // Это НЕ Post, хотя и похоже
     }
 
+    interface GlobalProperties {
+        average_block_size: number, //14663
+        confidential_sbd_supply: string, //"0.000 SBD"
+        confidential_supply: string, //"0.000 STEEM"
+        current_aslot: number, //21653933
+        current_reserve_ratio: number, //200000000
+        current_sbd_supply: string, //"11670855.200 SBD"
+        current_supply: string, //"266981159.569 STEEM"
+        current_witness: string, //"ausbitbank"
+        head_block_id: string, //"01496c3979b82b769c2364439277e364f7121dc1"
+        head_block_number: number, //21589049
+        last_irreversible_block_num: number, //21589034
+        max_virtual_bandwidth: string, //"264241152000000000000"
+        maximum_block_size: number, //65536
+        num_pow_witnesses: number, //172
+        participation_count: number, //128
+        pending_rewarded_vesting_shares: string, //"383027223.053349 VESTS"
+        pending_rewarded_vesting_steem: string, //"186658.772 STEEM"
+        recent_slots_filled: string, //"340282366920938463463374607431768211455"
+        sbd_interest_rate: number, //0
+        sbd_print_rate: number, //10000
+        time: string, //"2018-04-15T12:56:39"
+        total_pow: number, //514415
+        total_reward_fund_steem: string, //"0.000 STEEM"
+        total_reward_shares2: string, //"0"
+        total_vesting_fund_steem: string, //"190518666.387 STEEM"
+        total_vesting_shares: string, //"388305480112.074007 VESTS"
+        virtual_supply: string, //"271410326.627 STEEM"
+        vote_power_reserve_rate: number, //10
+    }
+
+    interface Account {
+        active: any, //{weight_threshold: 1, account_auths: Array(0), key_auths: Array(1)}
+        average_bandwidth: string, //"15006145465"
+        average_market_bandwidth: number, //0
+        balance: string, //"0.000 STEEM"
+        can_vote: boolean, //true
+        comment_count: number, //0
+        created: string, //"2018-01-30T07:02:00"
+        curation_rewards: number, //2628
+        delegated_vesting_shares: string, //"0.000000 VESTS"
+        guest_bloggers: any[], //[]
+        id: number, //696343
+        json_metadata: any, //"{"profile":{"profile_image":"http://avatars.kards.qip.ru/images/avatar/c7/a2/107207.jpg"}}"
+        last_account_recovery: string, //"1970-01-01T00:00:00"
+        last_account_update: string, //"2018-03-28T18:07:33"
+        last_bandwidth_update: string, //"2018-04-15T12:34:09"
+        last_market_bandwidth_update: string, //"1970-01-01T00:00:00"
+        last_owner_update: string, //"2018-03-16T21:04:18"
+        last_post: string, //"1970-01-01T00:00:00"
+        last_root_post: string, //"1970-01-01T00:00:00"
+        last_vote_time: string, //"2018-04-15T12:34:09"
+        lifetime_bandwidth: string, //"73752000000"
+        lifetime_market_bandwidth: number, //0
+        lifetime_vote_count: number, //0
+        market_history: any[], //[]
+        memo_key: string, //"STM8jpAwzaSuw1nAXizim2c9HnZYktBQJdJyUXznP8E53rZvkYs4H"
+        mined: boolean, //false
+        name: string, //"bowezingo"
+        next_vesting_withdrawal: string, //"1969-12-31T23:59:59"
+        other_history: any[], //[]
+        owner: any, //{weight_threshold: 1, account_auths: Array(0), key_auths: Array(1)}
+        post_count: number, //0
+        post_history: any[], //[]
+        posting: any, //{weight_threshold: 1, account_auths: Array(1), key_auths: Array(1)}
+        posting_rewards: number, //0
+        proxied_vsf_votes: any, //(4) [0, 0, 0, 0]
+        proxy: string, //""
+        received_vesting_shares: string, //"2679621.992874 VESTS"
+        recovery_account: string, //"steem"
+        reputation: number, //0
+        reset_account: string, //"null"
+        reward_sbd_balance: string, //"0.000 SBD"
+        reward_steem_balance: string, //"0.000 STEEM"
+        reward_vesting_balance: string, //"2536.200154 VESTS"
+        reward_vesting_steem: string, //"1.244 STEEM"
+        savings_balance: string, //"0.000 STEEM"
+        savings_sbd_balance: string, //"0.000 SBD"
+        savings_sbd_last_interest_payment: string, //"1970-01-01T00:00:00"
+        savings_sbd_seconds: string, //"0"
+        savings_sbd_seconds_last_update: string, //"1970-01-01T00:00:00"
+        savings_withdraw_requests: number, //0
+        sbd_balance: string, //"0.000 SBD"
+        sbd_last_interest_payment: string, //"1970-01-01T00:00:00"
+        sbd_seconds: string, //"0"
+        sbd_seconds_last_update: string, //"2018-04-04T16:53:45"
+        tags_usage: any[], //[]
+        to_withdraw: number, //0
+        transfer_history: any[], //[]
+        vesting_balance: string, //"0.000 STEEM"
+        vesting_shares: string, //"3846.205032 VESTS"
+        vesting_withdraw_rate: string, //"0.000000 VESTS"
+        vote_history: any[], //[]
+        voting_power: number, //9827
+        withdraw_routes: number, //0
+        withdrawn: number, //0
+        witness_votes: any[], //[]
+        witnesses_voted_for: number, //0            
+    }
+
     interface Api {
 //     {
 //       "api": "database_api",
@@ -134,7 +234,7 @@
         // getActiveCategoriesAsync(after: string, limit: number): Promise<any>; // !
         // getRecentCategoriesAsync(after: string, limit: number): Promise<any>; // !
         getConfigAsync(): Promise<any>;
-        getDynamicGlobalPropertiesAsync(): Promise<any>;
+        getDynamicGlobalPropertiesAsync(): Promise<GlobalProperties>;
         getChainPropertiesAsync(): Promise<any>;
         getFeedHistoryAsync(): Promise<any>;
         getCurrentMedianHistoryPriceAsync(): Promise<any>;
@@ -146,7 +246,7 @@
 //       "method": "get_key_references",
 //       "params": ["key"]
 //     },
-        getAccountsAsync(names: string[]): Promise<any>;        
+        getAccountsAsync(names: string[]): Promise<Account[]>;        
 //     {
 //       "api": "database_api",
 //       "method": "get_account_references",

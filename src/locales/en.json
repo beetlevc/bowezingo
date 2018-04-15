@@ -1,9 +1,16 @@
 {
     "bvc": {
         "bowezingo_feed": "Bowezingo feed",
+        "show_all_posts": "Show all posts",
         "recent_post": "Recent post",
         "low_sp": "Low SP",
         "post_in_russian": "Post in Russian",
+        "has_pictures": "Pictures",
+        "whitelisted": "Whitelisted",
+        "max_days": "Max days",
+        "sp_limit": "SP limit (inluding delegated)",
+        "min_russian_letters": "Min Russian letters count",
+        "russian_letter_count": "Russian letter count: ",
         "settings": "Settings",
         "apply_settings": "Apply",
         "account_list_description": "Comma-separated account list",

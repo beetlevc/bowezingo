@@ -40,6 +40,15 @@ const appVMP = new Vue({
       // `this` points to the vm instance
       return appVM.visiblePostCount;
     },
+    showAllPosts: {
+      get: function(): boolean {
+        return appVM.internalShowAllPosts;
+      },
+      set: function(newValue: boolean) {
+        appVM.internalShowAllPosts = newValue;
+        appVM.loadMoreIfNeeded();
+      }
+    },
   },
   methods: {
     tt: function (key: string|string[], options?: object): string {

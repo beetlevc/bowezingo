@@ -3,10 +3,9 @@ import { SteemitBaseUrl } from '../constants'
 import relativeFormat from '../utils/RelativeFormat'
 import ExtractContent from '../utils/ExtractContent'
 import { formatDecimal, parsePayoutAmount, repLog10 } from '../utils/ParsersAndFormatters'
+import { vestingSteem, delegatedSteem } from '../utils/StateFunctions'
 import proxifyImageUrl from '../utils/ProxifyUrl'
 import * as steem from 'steem'
-
-const MsInHour: number = 60 * 60 * 1000;
 
 // function calcReputationLog10(reputation: number): number {
 //     let multi = (reputation < 0)?-9:9;
@@ -18,14 +17,16 @@ const MsInHour: number = 60 * 60 * 1000;
 // }
 
 export default class PostVM {
-    isVisible: boolean = true;
-    readonly imageUrl: string;
+    readonly imageUrl?: string;
     readonly blogSizeImageUrl: string;
     readonly listSizeImageUrl: string;
     readonly description: string;
-    readonly isRecentPost: boolean;
-    readonly isRus: boolean;
-    readonly isSpLow: boolean;
+    readonly rusLetterCount: number;
+    isRecentPost: boolean = false;
+    isRus: boolean = false;
+    isSpLow: boolean = false;
+    isWhitelisted: boolean = false;
+    isEligiblePost: boolean = false;
 
     get authorUrl(): string {
         return `${SteemitBaseUrl}/@${this.author}`;
@@ -94,6 +95,19 @@ export default class PostVM {
         return this.reblogged_by && this.reblogged_by.length > 0;
     } 
 
+    get spDescription(): string {
+        if (this.delegatedSteem) {
+            if (this.delegatedSteem < 0) {
+                return `${this.vestingSteem.toFixed(3)} STEEM` + "\n" + `(+${Math.abs(this.delegatedSteem).toFixed(3)} STEEM)`;
+            }
+            else {
+                return `${this.vestingSteem.toFixed(3)} STEEM` + "\n" + `(-${Math.abs(this.delegatedSteem).toFixed(3)} STEEM)`;
+            }
+        } else {
+            return `${this.vestingSteem.toFixed(3)} STEEM`;
+        }
+    }
+
     constructor(
         public readonly author: string, 
         public readonly reputation: number,
@@ -111,6 +125,8 @@ export default class PostVM {
         public readonly curator_payout_value: string,
         public readonly json_metadata: string,
         public readonly reblogged_by: string[],
+        public readonly vestingSteem: number,
+        public readonly delegatedSteem: number,
     ) {
         const content = ExtractContent(this.body, this.json_metadata);
         this.imageUrl = content.image_link;
@@ -128,12 +144,10 @@ export default class PostVM {
             this.listSizeImageUrl = this.imageUrl;
         }
         this.description = content.desc;
-        this.isRecentPost = (Date.now() - created.valueOf()) / MsInHour <= 24;
-        this.isRus = true;
-        this.isSpLow = true;
+        this.rusLetterCount = (content.post_text.toLowerCase().match(/а|б|в|г|д|е|ё|ж|з|и|й|к|л|м|н|о|п|р|с|т|у|ф|х|ц|ч|ш|щ|ъ|ы|ь|э|ю|я/g) || []).length;
     }
 
-    static create(post: steem.Post): PostVM {
+    static create(post: steem.Post, dynamicGlobalProperties: steem.GlobalProperties, account: steem.Account): PostVM {
         return new PostVM(
             post.author, 
             parseInt(post.author_reputation),
@@ -152,6 +166,8 @@ export default class PostVM {
             post.curator_payout_value,
             post.json_metadata,
             post.reblogged_by,
+            vestingSteem(account, dynamicGlobalProperties),
+            delegatedSteem(account, dynamicGlobalProperties),
         );
     }
 }

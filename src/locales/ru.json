@@ -1,9 +1,16 @@
 ﻿{
     "bvc": {
         "bowezingo_feed": "Лента Bowezingo",
+        "show_all_posts": "Показывать все посты",
         "recent_post": "Свежий пост",
         "low_sp": "Мало SP",
         "post_in_russian": "Пост на русском",
+        "has_pictures": "Картинки",
+        "whitelisted": "В белом списке",
+        "max_days": "Не старше чем (дней)",
+        "sp_limit": "Верхний предел SP (включая делегированную)",
+        "min_russian_letters": "Минимальное кол-во русских символов",
+        "russian_letter_count": "Кол-во русских символов: ",
         "settings": "Настройки",
         "apply_settings": "Применить",
         "account_list_description": "Список аккаунтов через запятую",

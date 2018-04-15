@@ -78,6 +78,7 @@ export default function extractContent(body, json_metadata) {
     // if(config.ipfs_prefix && image_link) // allow localhost nodes to see ipfs images
     //     image_link = image_link.replace(links.ipfsPrefix, config.ipfs_prefix)
 
+    let post_text;
     let desc;
     // let desc_complete = false;
     if (!desc) {
@@ -95,6 +96,7 @@ export default function extractContent(body, json_metadata) {
 
         // Strip any raw URLs from preview text
         desc = desc.replace(/https?:\/\/[^\s]+/g, '');
+        post_text = desc;
 
         // Grab only the first line (not working as expected. does rendering/sanitizing strip newlines?)
         desc = desc.trim().split('\n')[0];
@@ -134,6 +136,7 @@ export default function extractContent(body, json_metadata) {
         // desc_complete,
         // body,
         // pending_payout,
+        post_text,
     };
     // return desc;
 }

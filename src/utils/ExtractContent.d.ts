@@ -1,1 +1,1 @@
-﻿export default function extractContent(body: string, json_metadata: string): { image_link: string, desc: string };
+﻿export default function extractContent(body: string, json_metadata: string): { image_link: string, desc: string, post_text: string, };
