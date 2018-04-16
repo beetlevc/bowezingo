@@ -15,10 +15,19 @@
        parent_permlink?: string;
     }
 
+    interface Vote {
+        percent: number, //10000
+        reputation: string, //"74378317044"
+        rshares: number, //443494199
+        time: string, //"2018-04-16T08:14:51"
+        voter: string, //"armia"
+        weight: number, //724            
+    }
+
     interface Post {
         abs_rshares: string; //"101775123872"
         active: string; //"2018-04-03T09:28:33"
-        active_votes: any[];
+        active_votes: Vote[];
         allow_curation_rewards: boolean;
         allow_replies: boolean;
         allow_votes: boolean;

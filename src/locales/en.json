@@ -1,12 +1,13 @@
 {
     "bvc": {
-        "bowezingo_feed": "Bowezingo feed",
+        "bowezingo_feed": "RuSteemTeam feed",
         "show_all_posts": "Show all posts",
         "recent_post": "Recent post",
         "low_sp": "Low SP",
         "post_in_russian": "Post in Russian",
         "has_pictures": "Pictures",
         "whitelisted": "Whitelisted",
+        "not_rewarded": "Not rewarded",
         "max_days": "Max days",
         "sp_limit": "SP limit (inluding delegated)",
         "min_russian_letters": "Min Russian letters count",

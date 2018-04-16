@@ -94,7 +94,7 @@ export default class AppVM {
             let sAuthor: string = "";
             let sPermlink: string = "";
             let sExclude = true;
-            while (!this.isAllLoaded && minVisiblePosts > this.visiblePostCount) {
+            while (!this.isAllLoaded && minVisiblePosts > this.visiblePostCount && !(!this.internalShowAllPosts && this.settings.isFilterActive_RecentPost && this.posts.length && !this.posts[this.posts.length - 1].isRecentPost)) {
                 if (this.posts.length) {
                     sAuthor = this.posts[this.posts.length - 1].author;
                     sPermlink = this.posts[this.posts.length - 1].permlink;
@@ -136,7 +136,7 @@ export default class AppVM {
     filterPosts(posts: PostVM[]): void {
         for (const post of posts) {
             post.isRecentPost = (Date.now() - post.created.valueOf()) / MsInHour <= 24 * this.settings.maxDays;
-            post.isSpLow = (post.vestingSteem - post.delegatedSteem) < this.settings.maxSp;
+            post.isSpLow = (post.vestingSteem - (post.delegatedSteem < 0 ? post.delegatedSteem : 0)) < this.settings.maxSp;
             post.isRus = post.rusLetterCount > this.settings.minRusLetters;
             post.isWhitelisted = this.settings.whitelist.indexOf(post.author) >= 0;
             post.isEligiblePost = 
@@ -144,7 +144,8 @@ export default class AppVM {
                 (!this.settings.isFilterActive_SpLow || post.isSpLow) &&
                 (!this.settings.isFilterActive_Rus || post.isRus) &&
                 (!this.settings.isFilterActive_Pictures || post.imageUrl !== undefined) &&
-                (!this.settings.isFilterActive_Whitelist || post.isWhitelisted);
+                (!this.settings.isFilterActive_Whitelist || post.isWhitelisted) &&
+                (!this.settings.isFilterActive_NotRewarded || post.bowezingoVoteTime === undefined);
         }
     }
 
@@ -156,6 +157,7 @@ export default class AppVM {
         this.settingsEditor.isFilterActive_Rus = this.settings.isFilterActive_Rus;
         this.settingsEditor.isFilterActive_Pictures = this.settings.isFilterActive_Pictures;
         this.settingsEditor.isFilterActive_Whitelist = this.settings.isFilterActive_Whitelist;
+        this.settingsEditor.isFilterActive_NotRewarded = this.settings.isFilterActive_NotRewarded;
         this.settingsEditor.maxDays = this.settings.maxDays.toString();
         this.settingsEditor.maxSp = this.settings.maxSp.toString();
         this.settingsEditor.minRusLetters = this.settings.minRusLetters.toString();
@@ -172,6 +174,7 @@ export default class AppVM {
         this.settings.isFilterActive_Rus = this.settingsEditor.isFilterActive_Rus;
         this.settings.isFilterActive_Pictures = this.settingsEditor.isFilterActive_Pictures;
         this.settings.isFilterActive_Whitelist = this.settingsEditor.isFilterActive_Whitelist;
+        this.settings.isFilterActive_NotRewarded = this.settingsEditor.isFilterActive_NotRewarded;
         this.settings.maxDays = parseInt(this.settingsEditor.maxDays, Settings.DefaultMaxDays, 1, 7);
         this.settings.maxSp = parseInt(this.settingsEditor.maxSp, Settings.DefaultMaxSp, 0, 1000000);
         this.settings.minRusLetters = parseInt(this.settingsEditor.minRusLetters, Settings.DefaultMinRusLetters, 0, 1000000);
@@ -193,6 +196,7 @@ export default class AppVM {
             this.settings.isFilterActive_Rus = settings.isFilterActive_Rus;
             this.settings.isFilterActive_Pictures = settings.isFilterActive_Pictures;
             this.settings.isFilterActive_Whitelist = settings.isFilterActive_Whitelist;
+            this.settings.isFilterActive_NotRewarded = settings.isFilterActive_NotRewarded;
             this.settings.maxDays = parseInt(settings.maxDays, Settings.DefaultMaxDays, 1, 7);
             this.settings.maxSp = parseInt(settings.maxSp, Settings.DefaultMaxSp, 0, 1000000);
             this.settings.minRusLetters = parseInt(settings.minRusLetters, Settings.DefaultMinRusLetters, 0, 1000000);

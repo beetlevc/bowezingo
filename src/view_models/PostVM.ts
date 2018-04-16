@@ -48,10 +48,6 @@ export default class PostVM {
         return `${this.postUrl}#comments`;
     }
 
-    get createdString(): string {
-        return this.created.toLocaleString(CurrentLocale);
-    }
-
     get reputationLog10(): number {
         return repLog10(this.reputation);
     }
@@ -127,6 +123,7 @@ export default class PostVM {
         public readonly reblogged_by: string[],
         public readonly vestingSteem: number,
         public readonly delegatedSteem: number,
+        public readonly bowezingoVoteTime?: Date,
     ) {
         const content = ExtractContent(this.body, this.json_metadata);
         this.imageUrl = content.image_link;
@@ -148,13 +145,15 @@ export default class PostVM {
     }
 
     static create(post: steem.Post, dynamicGlobalProperties: steem.GlobalProperties, account: steem.Account): PostVM {
+        // const isRewarded = post.active_votes.some((value, index, array) => value.voter === "bowezingo");
+        const bowezingoVote: steem.Vote | undefined = post.active_votes.find((value, index, array) => value.voter === "bowezingo");
+        const bowezingoVoteTime: Date | undefined = bowezingoVote ? new Date(bowezingoVote.time.concat("Z")) : undefined;
         return new PostVM(
             post.author, 
             parseInt(post.author_reputation),
             post.title,
             post.permlink,
             post.url,
-            // imageUrl,
             post.category,
             post.body,
             new Date(post.created.concat("Z")),
@@ -168,6 +167,7 @@ export default class PostVM {
             post.reblogged_by,
             vestingSteem(account, dynamicGlobalProperties),
             delegatedSteem(account, dynamicGlobalProperties),
+            bowezingoVoteTime,
         );
     }
 }

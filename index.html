@@ -4,11 +4,11 @@
     <!-- <base href="/bowezingo/"> -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bowezingo contest feed.">
+    <meta name="description" content="RuSteemTeam feed">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Bowezingo">
-    <meta property="og:title" content="Bowezingo">
-    <meta property="og:description" content="Bowezingo contest feed.">
+    <meta property="og:site_name" content="RuSteemTeam feed">
+    <meta property="og:title" content="RuSteemTeam feed">
+    <meta property="og:description" content="RuSteemTeam feed">
     <meta property="og:image" content="https://steemit.com/images/steemit.png">
     <link rel="icon" type="image/x-icon" href="https://steemit.com/favicon.ico?v=2">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-196x196.png" sizes="196x196">
@@ -16,8 +16,8 @@
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="https://steemit.com/images/favicons/favicon-128.png" sizes="128x128">
-    <meta name="application-name" content="Bowezingo">
-    <title>Bowezingo</title>
+    <meta name="application-name" content="RuSteemTeam feed">
+    <title>RuSteemTeam feed</title>
     <style type="text/css">
         [v-cloak] {display: none}
     </style>
@@ -53,6 +53,10 @@
                             <input type="checkbox" tabindex="2" v-model="settingsEditor.isFilterActive_Whitelist" style="vertical-align: middle">
                             {{ tt('bvc.whitelisted') }}
                             <textarea type="text" v-bind:placeholder="tt('bvc.account_list_description')" v-bind:title="tt('bvc.account_list_description')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="4" name="whitelist" v-model="settingsEditor.whitelist" style="resize: vertical; height: 5rem"></textarea>
+                        </label>
+                        <label class="SettingTitle" v-bind:title="tt('bvc.not_rewarded')">
+                            <input type="checkbox" tabindex="2" v-model="settingsEditor.isFilterActive_NotRewarded" style="vertical-align: middle">
+                            {{ tt('bvc.not_rewarded') }}
                         </label>
                         <button class="button" tabindex="6" v-on:click="saveSettings">{{ tt('bvc.apply_settings') }}</button>
                         <hr />
@@ -126,7 +130,7 @@
                                                 </div>
                                                 <div class="user__col user__col--right">
                                                     <!--Критично! Вся начинка div должна быть в одну строку и без пробелов, иначе в отображаемой строке появляются ненужные пробелы!-->
-                                                    <span class="user__name"><span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><strong><a target="_blank" v-bind:href="post.authorUrl">{{ post.author }}</a></strong>&nbsp;<span class="Reputation" v-bind:title="tt('g.reputation')">({{ post.reputationLog10 }})</span></span></span><span class="articles__tag-link">{{ tt('g.in') }}&nbsp;<a v-bind:href="post.categoryUrl">{{ post.category }}</a>&nbsp;•&nbsp;</span><a class="timestamp__link" v-bind:href="post.postUrl"><span class="timestamp__time"><span v-bind:title="post.createdString" class="updated"><span>{{ post.relativeCreated }}</span></span></span></a>
+                                                    <span class="user__name"><span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><strong><a target="_blank" v-bind:href="post.authorUrl">{{ post.author }}</a></strong>&nbsp;<span class="Reputation" v-bind:title="tt('g.reputation')">({{ post.reputationLog10 }})</span></span></span><span class="articles__tag-link">{{ tt('g.in') }}&nbsp;<a v-bind:href="post.categoryUrl">{{ post.category }}</a>&nbsp;•&nbsp;</span><a class="timestamp__link" v-bind:href="post.postUrl"><span class="timestamp__time"><span v-bind:title="formatDateTime(post.created)" class="updated"><span>{{ post.relativeCreated }}</span></span></span></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,11 +196,12 @@
                                             </div>
                                         </div>
                                         <div class="BowezingoTagList__horizontal">
-                                            <span v-if="settings.isFilterActive_RecentPost" v-bind:class="{ 'BowezingoTagGreen': post.isRecentPost, 'BowezingoTagRed': !post.isRecentPost, }" v-bind:title="post.createdString">{{ tt('bvc.recent_post') }}</span>
+                                            <span v-if="settings.isFilterActive_RecentPost" v-bind:class="{ 'BowezingoTagGreen': post.isRecentPost, 'BowezingoTagRed': !post.isRecentPost, }" v-bind:title="formatDateTime(post.created)">{{ tt('bvc.recent_post') }}</span>
                                             <span v-if="settings.isFilterActive_SpLow" v-bind:class="{ 'BowezingoTagGreen': post.isSpLow, 'BowezingoTagRed': !post.isSpLow, }" v-bind:title="post.spDescription">{{ tt('bvc.low_sp') }}</span>
                                             <span v-if="settings.isFilterActive_Rus" v-bind:class="{ 'BowezingoTagGreen': post.isRus, 'BowezingoTagRed': !post.isRus, }" v-bind:title="tt('bvc.russian_letter_count') + post.rusLetterCount">{{ tt('bvc.post_in_russian') }}</span>
                                             <span v-if="settings.isFilterActive_Pictures" v-bind:class="{ 'BowezingoTagGreen': post.imageUrl, 'BowezingoTagRed': !post.imageUrl, }">{{ tt('bvc.has_pictures') }}</span>
                                             <span v-if="settings.isFilterActive_Whitelist" v-bind:class="{ 'BowezingoTagGreen': post.isWhitelisted, 'BowezingoTagRed': !post.isWhitelisted, }">{{ tt('bvc.whitelisted') }}</span>
+                                            <span v-if="settings.isFilterActive_NotRewarded" v-bind:class="{ 'BowezingoTagGreen': !post.bowezingoVoteTime, 'BowezingoTagRed': post.bowezingoVoteTime, }" v-bind:title="formatDateTime(post.bowezingoVoteTime)">{{ tt('bvc.not_rewarded') }}</span>
                                         </div>
                                     </div>
                                 </li>
