@@ -162,6 +162,7 @@ export default class AppVM {
         this.settingsEditor.maxSp = this.settings.maxSp.toString();
         this.settingsEditor.minRusLetters = this.settings.minRusLetters.toString();
         this.settingsEditor.whitelist = this.settings.whitelist.join(", ");
+        this.settingsEditor.postViewer = this.settings.postViewer;
     }
 
     hideSettingsPanel(): void {
@@ -179,6 +180,7 @@ export default class AppVM {
         this.settings.maxSp = parseInt(this.settingsEditor.maxSp, Settings.DefaultMaxSp, 0, 1000000);
         this.settings.minRusLetters = parseInt(this.settingsEditor.minRusLetters, Settings.DefaultMinRusLetters, 0, 1000000);
         this.settings.whitelist = this.settingsEditor.whitelist ? this.settingsEditor.whitelist.split(",").map(x => x.trim()) : []
+        this.settings.postViewer = this.settingsEditor.postViewer !== undefined ? this.settingsEditor.postViewer : Settings.DefaultPostViewer;
 
         this.saveSettings();
         this.filterPosts(this.posts);
@@ -201,6 +203,7 @@ export default class AppVM {
             this.settings.maxSp = parseInt(settings.maxSp, Settings.DefaultMaxSp, 0, 1000000);
             this.settings.minRusLetters = parseInt(settings.minRusLetters, Settings.DefaultMinRusLetters, 0, 1000000);
             this.settings.whitelist = parseStringArray(settings.whitelist, Settings.DefaultWhitelist);
+            this.settings.postViewer = settings.postViewer ? settings.postViewer : Settings.DefaultPostViewer;
         } catch (ex) {
             console.log("Could not load settings.");
             console.error(ex);

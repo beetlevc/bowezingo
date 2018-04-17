@@ -1,5 +1,4 @@
 ﻿import { CurrentLocale } from '../Translator'
-import { SteemitBaseUrl } from '../constants'
 import relativeFormat from '../utils/RelativeFormat'
 import ExtractContent from '../utils/ExtractContent'
 import { formatDecimal, parsePayoutAmount, repLog10 } from '../utils/ParsersAndFormatters'
@@ -29,7 +28,7 @@ export default class PostVM {
     isEligiblePost: boolean = false;
 
     get authorUrl(): string {
-        return `${SteemitBaseUrl}/@${this.author}`;
+        return `/@${this.author}`;
     }
 
     get avatarSmall(): string {
@@ -37,15 +36,11 @@ export default class PostVM {
     }
 
     get categoryUrl(): string {
-        return `${SteemitBaseUrl}/trending/${this.category}`;
-    }
-
-    get postUrl(): string {
-        return `${SteemitBaseUrl}${this.url}`;
+        return `/trending/${this.category}`;
     }
 
     get commentsUrl(): string {
-        return `${this.postUrl}#comments`;
+        return `${this.url}#comments`;
     }
 
     get reputationLog10(): number {
@@ -81,7 +76,7 @@ export default class PostVM {
 
     get rebloggedByUrl(): string {
         if (this.reblogged_by && this.reblogged_by.length > 0) {
-            return `${SteemitBaseUrl}/@${this.reblogged_by[0]}`;
+            return `/@${this.reblogged_by[0]}`;
         } else {
             return "";
         }

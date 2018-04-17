@@ -15,6 +15,7 @@
         "settings": "Settings",
         "apply_settings": "Apply",
         "account_list_description": "Comma-separated account list",
+        "view_posts_on": "View posts on",
         "service_unavailable": "Service is temporarily unavailable. Please try again later."
     },
     "g": {
