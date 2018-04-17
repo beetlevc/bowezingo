@@ -54,9 +54,9 @@
                             {{ tt('bvc.whitelisted') }}
                             <textarea type="text" v-bind:placeholder="tt('bvc.account_list_description')" v-bind:title="tt('bvc.account_list_description')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="4" name="whitelist" v-model="settingsEditor.whitelist" style="resize: vertical; height: 5rem"></textarea>
                         </label>
-                        <label class="SettingTitle" v-bind:title="tt('bvc.not_rewarded')">
+                        <label class="SettingTitle" v-bind:title="tt('bvc.no_award')">
                             <input type="checkbox" tabindex="2" v-model="settingsEditor.isFilterActive_NotRewarded" style="vertical-align: middle">
-                            {{ tt('bvc.not_rewarded') }}
+                            {{ tt('bvc.no_award') }}
                         </label>
                         <button class="button" tabindex="6" v-on:click="saveSettings">{{ tt('bvc.apply_settings') }}</button>
                         <hr />
@@ -201,7 +201,7 @@
                                             <span v-if="settings.isFilterActive_Rus" v-bind:class="{ 'BowezingoTagGreen': post.isRus, 'BowezingoTagRed': !post.isRus, }" v-bind:title="tt('bvc.russian_letter_count') + post.rusLetterCount">{{ tt('bvc.post_in_russian') }}</span>
                                             <span v-if="settings.isFilterActive_Pictures" v-bind:class="{ 'BowezingoTagGreen': post.imageUrl, 'BowezingoTagRed': !post.imageUrl, }">{{ tt('bvc.has_pictures') }}</span>
                                             <span v-if="settings.isFilterActive_Whitelist" v-bind:class="{ 'BowezingoTagGreen': post.isWhitelisted, 'BowezingoTagRed': !post.isWhitelisted, }">{{ tt('bvc.whitelisted') }}</span>
-                                            <span v-if="settings.isFilterActive_NotRewarded" v-bind:class="{ 'BowezingoTagGreen': !post.bowezingoVoteTime, 'BowezingoTagRed': post.bowezingoVoteTime, }" v-bind:title="formatDateTime(post.bowezingoVoteTime)">{{ tt('bvc.not_rewarded') }}</span>
+                                            <span v-if="settings.isFilterActive_NotRewarded" v-bind:class="{ 'BowezingoTagGreen': !post.bowezingoVoteTime, 'BowezingoTagRed': post.bowezingoVoteTime, }" v-bind:title="formatDateTime(post.bowezingoVoteTime)">{{ tt('bvc.no_award') }}</span>
                                         </div>
                                     </div>
                                 </li>
