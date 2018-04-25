@@ -21,6 +21,35 @@
     <style type="text/css">
         [v-cloak] {display: none}
     </style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter48654083 = new Ya.Metrika({
+                    id:48654083,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/48654083" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
     <div id="content" v-cloak>
@@ -33,17 +62,17 @@
                         <label class="SettingTitle" v-bind:title="tt('bvc.recent_post')">
                             <input type="checkbox" tabindex="1" v-model="settingsEditor.isFilterActive_RecentPost" style="vertical-align: middle">
                             {{ tt('bvc.recent_post') }}
-                            <input type="number" v-bind:placeholder="tt('bvc.max_days')" v-bind:title="tt('bvc.max_days')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="2" name="blog" v-model="settingsEditor.maxDays" required>
+                            <input type="number" v-bind:placeholder="tt('bvc.max_days')" v-bind:title="tt('bvc.max_days')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="2" name="max_days" v-model="settingsEditor.maxDays" required>
                         </label>
                         <label class="SettingTitle" v-bind:title="tt('bvc.low_sp')">
                             <input type="checkbox" tabindex="3" v-model="settingsEditor.isFilterActive_SpLow" style="vertical-align: middle">
                             {{ tt('bvc.low_sp') }}
-                            <input type="number" v-bind:placeholder="tt('bvc.sp_limit')" v-bind:title="tt('bvc.sp_limit')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="4" name="blog" v-model="settingsEditor.maxSp" required>
+                            <input type="number" v-bind:placeholder="tt('bvc.sp_limit')" v-bind:title="tt('bvc.sp_limit')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="4" name="sp_limit" v-model="settingsEditor.maxSp" required>
                         </label>
                         <label class="SettingTitle" v-bind:title="tt('bvc.post_in_russian')">
                             <input type="checkbox" tabindex="5" v-model="settingsEditor.isFilterActive_Rus" style="vertical-align: middle">
                             {{ tt('bvc.post_in_russian') }}
-                            <input type="number" v-bind:placeholder="tt('bvc.min_russian_letters')" v-bind:title="tt('bvc.min_russian_letters')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="6" name="blog" v-model="settingsEditor.minRusLetters" required>
+                            <input type="number" v-bind:placeholder="tt('bvc.min_russian_letters')" v-bind:title="tt('bvc.min_russian_letters')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="6" name="min_russian_letters" v-model="settingsEditor.minRusLetters" required>
                         </label>
                         <label class="SettingTitle" v-bind:title="tt('bvc.has_pictures')">
                             <input type="checkbox" tabindex="7" v-model="settingsEditor.isFilterActive_Pictures" style="vertical-align: middle">
